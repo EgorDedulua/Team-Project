@@ -1,20 +1,22 @@
 ﻿using System;
-
-/// <summary>
-/// Summary description for Class1
-/// </summary>
-public class Article
-{
-	public Person Author { get; set; }
-	public string Name { get; set; }
-	public double Rating { get; set; }
-	public Article(Person z,string y,double x)
+namespace Team_Project {
+	public class Article
 	{
-		Author = z;
-		Name = y;
-		Rating = x;
+		public Person Author { get; set; }
+		public string Name { get; set; }
+		public double Rating { get; set; }
+		public Article(Person z, string y, double x)
+		{
+			Author = z;
+			Name = y;
+			Rating = x;
+		}
+		public Article() {
+			Author = new Person()
+		}
+		override string ToStirng()
+		{
+			return "Автор: \n" + Author.ToString(); +"\nНазвание статьи: " + Name + "\nРейтинг: " + Rating;
+		}
 	}
-	public Article() {
-		Author = new Person()
-	}	
 }
