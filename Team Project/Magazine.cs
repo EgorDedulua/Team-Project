@@ -8,7 +8,7 @@ namespace Team_Project
         private DateTime date;
         private int id;
         private Article[] articles;
-        Magazine(string name, Frequency type, int id, Article article1)
+        Magazine(string name, Frequency type, int id, Article[] article1)
         {
             Name = name;
             Type = type;
@@ -17,14 +17,14 @@ namespace Team_Project
         }
         public string Name
         {
-            get => name
+            get => name;
             set {
                 name = value;
             }
         }
         public Frequency Type
         {
-            get => type
+            get => type;
             set
             {
                 type = value;
@@ -32,7 +32,7 @@ namespace Team_Project
         }
         public DateTime Date
         {
-            get => date
+            get => date;
             set
             {
                 date = value;
@@ -40,7 +40,7 @@ namespace Team_Project
         }
         public int Id
         {
-            get => id
+            get => id;
             set
             {
                 if (value < 1)
@@ -50,7 +50,7 @@ namespace Team_Project
         }
         public Article[] Articles
         {
-            get => articles
+            get => articles;
             set
             {
                 articles = value;
@@ -60,21 +60,22 @@ namespace Team_Project
         {
             get
             {
-                int sum = 0;
+                double sum = 0;
                 foreach (var i in articles)
                     sum += i.Rating;
                 return sum / articles.Length;
             }
         }
-        public bool this[Frequency f] 
+        public bool this[Frequency f]
         {
             get
             {
                 return f == type;
             }
+        }
         public void AddArticles(params Article[] mass)
         {
-            articles + mass;
+            
         }
     }
 }
