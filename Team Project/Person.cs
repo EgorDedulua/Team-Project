@@ -3,7 +3,7 @@
 
 namespace Team_Project
 {
-    internal class Person
+    public class Person
     {
         string? _firstName;
         string? _lastName;

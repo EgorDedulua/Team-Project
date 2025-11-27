@@ -12,11 +12,11 @@ namespace Team_Project {
 			Rating = x;
 		}
 		public Article() {
-			Author = new Person()
+			Author = new Person();
 		}
-		override string ToStirng()
+		public override string ToString()
 		{
-			return "Автор: \n" + Author.ToString(); +"\nНазвание статьи: " + Name + "\nРейтинг: " + Rating;
+			return "Автор: \n" + Author.ToString() +"\nНазвание статьи: " + Name + "\nРейтинг: " + Rating;
 		}
 	}
 }
