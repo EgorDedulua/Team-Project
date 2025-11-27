@@ -101,6 +101,7 @@ namespace Team_Project
         {
             string zxc = "";
             zxc = zxc + "Название: " + name + "Тип: " + type + "Дата: " + date + "id: " + id+"Средний рейтинг"+AvgRating.ToString();
+            return zxc;
         }
     }
 }
