@@ -75,7 +75,32 @@ namespace Team_Project
         }
         public void AddArticles(params Article[] mass)
         {
-            
+            Article[] arr = new Article[mass.Length+articles.Length];
+            int index=0;
+            for (int i=0;i<mass.Length;++i)
+            {
+                arr[index++] = mass[i];
+            }
+            for (int i = 0; i < articles.Length; ++i)
+            {
+                arr[index++] = articles[i];
+            }
+            articles = arr;
+        }
+        public override string ToString()
+        {
+            string zxc = "";
+            zxc = zxc + "Название: " + name + "Тип: " + type + "Дата: " + date + "id: " + id;
+            foreach (var item in articles)
+            {
+                zxc=zxc+item.ToString();
+            }
+            return zxc;
+        }
+        public virtual string ToShortString()
+        {
+            string zxc = "";
+            zxc = zxc + "Название: " + name + "Тип: " + type + "Дата: " + date + "id: " + id+"Средний рейтинг"+AvgRating.ToString();
         }
     }
 }
