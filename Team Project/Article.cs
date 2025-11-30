@@ -16,7 +16,7 @@ namespace Team_Project {
 		}
 		public override string ToString()
 		{
-			return "Автор: \n" + Author.ToString() +"\nНазвание статьи: " + Name + "\nРейтинг: " + Rating;
+			return "\nАвтор: \n" + Author.ToString() +"\nНазвание статьи: " + Name + "\nРейтинг: " + Rating;
 		}
 	}
 }
