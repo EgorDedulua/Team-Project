@@ -44,9 +44,11 @@ namespace Team_Project
 
         public Person()
         {
-            FirstName = "Не укказано"; LastName = "Не указано"; BirthDate = new DateTime(2000, 0, 1);
+            FirstName = "Не укказано"; LastName = "Не указано"; BirthDate = new DateTime(2000, 1, 1);
         }
 
-        public override string ToString() => $"Имя: {FirstName}\nФамилия: {LastName}\n Дата рождения: {BirthDate}";
+        public override string ToString() => $"Имя: {FirstName}\nФамилия: {LastName}\nДата рождения: {BirthDate.ToShortDateString()}";
+
+        public virtual string ToShortString() => $"Имя: {FirstName}\nФамилия: {LastName}";
     }
 }

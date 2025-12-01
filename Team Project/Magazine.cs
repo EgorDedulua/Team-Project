@@ -8,12 +8,13 @@ namespace Team_Project
         private DateTime date;
         private int id;
         private Article[] articles;
-        Magazine(string name, Frequency type, int id, Article[] article1)
+        public Magazine(string name, Frequency type, DateTime date, int id)
         {
             Name = name;
             Type = type;
+            Date = date;
             Id = id;
-            articles = article1;
+            articles = new Article[0];
         }
         public string Name
         {
@@ -90,7 +91,7 @@ namespace Team_Project
         public override string ToString()
         {
             string zxc = "";
-            zxc = zxc + "Название: " + name + "Тип: " + type + "Дата: " + date + "id: " + id;
+            zxc = zxc + "Название: " + name + "\nТип: " + type + "\nДата: " + date.ToShortDateString() + "\nid: " + id + "\n";
             foreach (var item in articles)
             {
                 zxc=zxc+item.ToString();
@@ -100,7 +101,7 @@ namespace Team_Project
         public virtual string ToShortString()
         {
             string zxc = "";
-            zxc = zxc + "Название: " + name + "Тип: " + type + "Дата: " + date + "id: " + id+"Средний рейтинг"+AvgRating.ToString();
+            zxc = zxc + "Название: " + name + "\nТип: " + type + "\nДата: " + date.ToShortDateString() + "\nid: " + id + "\nСредний рейтинг: " + AvgRating.ToString();
             return zxc;
         }
     }
