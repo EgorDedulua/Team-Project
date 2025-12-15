@@ -48,5 +48,40 @@ namespace Team_Project
         }
 
         public override string ToString() => $"Имя: {FirstName}\nФамилия: {LastName}\n Дата рождения: {BirthDate}";
+
+        public override bool Equals(object? obj)
+        {
+            if (obj is Person other)
+            {
+                return BirthDate == other.BirthDate && FirstName == other.FirstName && LastName == other.LastName;
+            }
+            return false;
+        }
+
+        public static bool operator ==(Person? a, Person? b)
+        {
+            if (a == null && b == null)
+                return true;
+
+            if (a == null || b == null)
+                return false;
+
+            return a.Equals(b);
+        }
+
+        public static bool operator !=(Person a, Person b)
+        {
+            return !(a == b);
+        }
+
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(_firstName, _lastName, _birthDate);
+        }
+
+        public virtual object DeepCopy()
+        {
+            return new Person(_firstName, _lastName, _birthDate);
+        }
     }
 }
