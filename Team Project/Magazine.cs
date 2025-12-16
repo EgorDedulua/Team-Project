@@ -119,16 +119,13 @@ namespace Team_Project
             return magazine;
         }
         public IEnumerable GetArticlesByRating(double rating)
-        {
-            string zxc = "";
-            zxc = zxc + "Название: " + name + "Тип: " + type + "Дата: " + date + "id: " + id;
+        { 
             foreach (var item in articles)
             {
                 Article article = item as Article;
                 if (article != null && article.Rating > rating)
                     yield return article;
             }
-            return zxc;
         }
         public IEnumerable GetArticlesByName(string str)
         {
