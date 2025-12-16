@@ -1,27 +1,20 @@
 ﻿using System;
+using System.Collections;
+
 namespace Team_Project
 {
-    public class Magazine
+    public class Magazine : Edition, IRateAndCopy
     {
-        private string name;
-        private Frequency type;
-        private DateTime date;
-        private int id;
-        private Article[] articles;
-        public Magazine(string name, Frequency type, DateTime date, int id)
+        Frequency type;
+        ArrayList articles;
+        ArrayList editors;
+        double rating;
+        public Magazine(string name, Frequency type, DateTime date, int circulation, double rating) : base(name, date, circulation)
         {
-            Name = name;
             Type = type;
-            Date = date;
-            Id = id;
-            articles = new Article[0];
-        }
-        public string Name
-        {
-            get => name;
-            set {
-                name = value;
-            }
+            articles = new ArrayList();
+            editors = new ArrayList();
+            Rating = rating;
         }
         public Frequency Type
         {
@@ -31,30 +24,20 @@ namespace Team_Project
                 type = value;
             }
         }
-        public DateTime Date
-        {
-            get => date;
-            set
-            {
-                date = value;
-            }
-        }
-        public int Id
-        {
-            get => id;
-            set
-            {
-                if (value < 1)
-                    throw new ArgumentException("Невернео значение!");
-                id = value;
-            }
-        }
-        public Article[] Articles
+        public ArrayList Articles
         {
             get => articles;
             set
             {
                 articles = value;
+            }
+        }
+        public ArrayList Editors
+        {
+            get => editors;
+            set
+            {
+                editors = value;
             }
         }
         public double AvgRating
@@ -63,8 +46,28 @@ namespace Team_Project
             {
                 double sum = 0;
                 foreach (var i in articles)
-                    sum += i.Rating;
-                return sum / articles.Length;
+                    sum += (i as Article).Rating;
+                return sum / articles.Count;
+            }
+        }
+        public double Rating
+        {
+            get => rating;
+            set
+            {
+                if (value < 0)
+                    throw new ArgumentException("Рейтинг не может быть меньше нуля");
+                rating = value;
+            }
+        }
+        public Edition Edition
+        {
+            get => new Edition(name, date, circulation);
+            set
+            {
+                name = value.Name;
+                date = value.Date;
+                circulation = value.Circulation;
             }
         }
         public bool this[Frequency f]
@@ -76,33 +79,54 @@ namespace Team_Project
         }
         public void AddArticles(params Article[] mass)
         {
-            Article[] arr = new Article[mass.Length+articles.Length];
-            int index=0;
-            for (int i=0;i<mass.Length;++i)
-            {
-                arr[index++] = mass[i];
-            }
-            for (int i = 0; i < articles.Length; ++i)
-            {
-                arr[index++] = articles[i];
-            }
-            articles = arr;
+            articles.Add(mass);
+        }
+        public void AddEditors(params Person[] mass)
+        {
+            editors.Add(mass);
         }
         public override string ToString()
         {
-            string zxc = "";
-            zxc = zxc + "Название: " + name + "\nТип: " + type + "\nДата: " + date.ToShortDateString() + "\nid: " + id + "\n";
+            string str = "";
+            str = str + "Журнал " + name + "\nТип: " + type + "\nДата: " + date + "\nТираж: " + circulation;
             foreach (var item in articles)
             {
-                zxc=zxc+item.ToString();
+                str = str + item.ToString();
             }
-            return zxc;
+            return str;
         }
         public virtual string ToShortString()
         {
-            string zxc = "";
-            zxc = zxc + "Название: " + name + "\nТип: " + type + "\nДата: " + date.ToShortDateString() + "\nid: " + id + "\nСредний рейтинг: " + AvgRating.ToString();
-            return zxc;
+            string str = "";
+            str = str + "Журнал " + name + "\nТип: " + type + "\nДата: " + date + "Тираж: " + circulation + "\nСредний рейтинг: " + AvgRating.ToString();
+            return str;
+        }
+        public override object DeepCopy()
+        {
+            Magazine magazine = new Magazine(name, type, date, circulation, rating);
+            foreach (var item in articles)
+                magazine.AddArticles((Article)(item as Article).DeepCopy());
+            foreach (var item in editors)
+                magazine.AddEditors((Person)(item as Person).DeepCopy());
+            return magazine;
+        }
+        public IEnumerable GetArticlesByRating(double rating)
+        {
+            foreach (var item in articles)
+            {
+                Article article = item as Article;
+                if (article != null && article.Rating > rating)
+                    yield return article;
+            }
+        }
+        public IEnumerable GetArticlesByName(string str)
+        {
+            foreach (var item in articles)
+            {
+                Article article = item as Article;
+                if (article != null && article.Name.Contains(str))
+                    yield return article;
+            }
         }
     }
 }
