@@ -52,18 +52,16 @@ namespace Team_Project
         public override bool Equals(object? obj)
         {
             if (obj is Person other)
-            {
                 return BirthDate == other.BirthDate && FirstName == other.FirstName && LastName == other.LastName;
-            }
             return false;
         }
 
         public static bool operator ==(Person? a, Person? b)
         {
-            if (a == null && b == null)
+            if (a is null && b is null)
                 return true;
 
-            if (a == null || b == null)
+            if (a is null || b is null)
                 return false;
 
             return a.Equals(b);

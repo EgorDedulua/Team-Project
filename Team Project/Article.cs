@@ -1,6 +1,6 @@
 ﻿using System;
 namespace Team_Project {
-	public class Article
+	public class Article : IRateAndCopy
 	{
 		public Person Author { get; set; }
 		public string Name { get; set; }
@@ -18,5 +18,10 @@ namespace Team_Project {
 		{
 			return "Автор: \n" + Author.ToString() +"\nНазвание статьи: " + Name + "\nРейтинг: " + Rating;
 		}
-	}
+
+        public virtual object DeepCopy()
+        {
+			return new Article((Person)Author.DeepCopy(), Name, Rating);
+        }
+    }
 }
