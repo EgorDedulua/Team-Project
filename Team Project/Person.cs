@@ -47,8 +47,39 @@ namespace Team_Project
             FirstName = "Не укказано"; LastName = "Не указано"; BirthDate = new DateTime(2000, 1, 1);
         }
 
-        public override string ToString() => $"Имя: {FirstName}\nФамилия: {LastName}\nДата рождения: {BirthDate.ToShortDateString()}";
+        public override string ToString() => $"Имя: {FirstName}\nФамилия: {LastName}\n Дата рождения: {BirthDate}";
 
-        public virtual string ToShortString() => $"Имя: {FirstName}\nФамилия: {LastName}";
+        public override bool Equals(object? obj)
+        {
+            if (obj is Person other)
+                return BirthDate == other.BirthDate && FirstName == other.FirstName && LastName == other.LastName;
+            return false;
+        }
+
+        public static bool operator ==(Person? a, Person? b)
+        {
+            if (a is null && b is null)
+                return true;
+
+            if (a is null || b is null)
+                return false;
+
+            return a.Equals(b);
+        }
+
+        public static bool operator !=(Person a, Person b)
+        {
+            return !(a == b);
+        }
+
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(_firstName, _lastName, _birthDate);
+        }
+
+        public virtual object DeepCopy()
+        {
+            return new Person(_firstName, _lastName, _birthDate);
+        }
     }
 }

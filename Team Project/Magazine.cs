@@ -11,10 +11,18 @@ namespace Team_Project
         double rating;
         public Magazine(string name, Frequency type, DateTime date, int circulation, double rating) : base(name, date, circulation)
         {
+            Name = name;
             Type = type;
             articles = new ArrayList();
             editors = new ArrayList();
             Rating = rating;
+        }
+        public string Name
+        {
+            get => name;
+            set {
+                name = value;
+            }
         }
         public Frequency Type
         {
@@ -94,13 +102,13 @@ namespace Team_Project
                 str = str + item.ToString();
             }
             return str;
-        }
+            }
         public virtual string ToShortString()
-        {
+            {
             string str = "";
             str = str + "Журнал " + name + "\nТип: " + type + "\nДата: " + date + "Тираж: " + circulation + "\nСредний рейтинг: " + AvgRating.ToString();
             return str;
-        }
+            }
         public override object DeepCopy()
         {
             Magazine magazine = new Magazine(name, type, date, circulation, rating);
@@ -112,17 +120,20 @@ namespace Team_Project
         }
         public IEnumerable GetArticlesByRating(double rating)
         {
+            string zxc = "";
+            zxc = zxc + "Название: " + name + "Тип: " + type + "Дата: " + date + "id: " + id;
             foreach (var item in articles)
             {
                 Article article = item as Article;
                 if (article != null && article.Rating > rating)
                     yield return article;
             }
+            return zxc;
         }
         public IEnumerable GetArticlesByName(string str)
         {
             foreach (var item in articles)
-            {
+        {
                 Article article = item as Article;
                 if (article != null && article.Name.Contains(str))
                     yield return article;
