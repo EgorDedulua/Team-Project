@@ -3,7 +3,7 @@ using System.Collections;
 
 namespace Team_Project
 {
-    public class MagazineEnumerator : IEnumerator<Magazine>
+    public class MagazineEnumerator : IEnumerator<Article>
     {
         int currentIndex = -1;
         ArrayList articles;
@@ -15,22 +15,19 @@ namespace Team_Project
             this.editors = editors;
         }
 
-        public Magazine Current
+        public Article Current
         {
             get
             {
                 if (currentIndex == -1 || currentIndex >= articles.Count)
                     throw new IndexOutOfRangeException("Индекс вышел за пределы списка статей");
-                return (Magazine)articles[currentIndex];
+                return (Article)articles[currentIndex];
             }
         }
 
         object IEnumerator.Current => Current;
 
-        public void Dispose()
-        {
-            throw new NotImplementedException();
-        }
+        public void Dispose() { }
 
         public bool MoveNext()
         {

@@ -11,12 +11,13 @@ namespace Team_Project {
 			Name = y;
 			Rating = x;
 		}
-		public Article() {
+		public Article() 
+		{
 			Author = new Person();
 		}
 		public override string ToString()
 		{
-			return "Автор: \n" + Author.ToString() +"\nНазвание статьи: " + Name + "\nРейтинг: " + Rating;
+			return "Автор: \n" + Author.ToString() +"\nНазвание статьи: " + Name + "\nРейтинг: " + Rating + "\n";
 		}
 
         public virtual object DeepCopy()
