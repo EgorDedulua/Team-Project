@@ -3,7 +3,7 @@ using System.Collections;
 
 namespace Team_Project
 {
-    public class Magazine : Edition, IRateAndCopy
+    public class Magazine : Edition, IRateAndCopy, IEnumerable<Magazine>
     {
         Frequency type;
         ArrayList articles;
@@ -102,13 +102,13 @@ namespace Team_Project
                 str = str + item.ToString();
             }
             return str;
-            }
+        }
         public virtual string ToShortString()
-            {
+        {
             string str = "";
             str = str + "Журнал " + name + "\nТип: " + type + "\nДата: " + date + "Тираж: " + circulation + "\nСредний рейтинг: " + AvgRating.ToString();
             return str;
-            }
+        }
         public override object DeepCopy()
         {
             Magazine magazine = new Magazine(name, type, date, circulation, rating);
@@ -129,12 +129,52 @@ namespace Team_Project
         }
         public IEnumerable GetArticlesByName(string str)
         {
-            foreach (var item in articles)
-        {
-                Article article = item as Article;
+            foreach (Article article in articles)
+            {
                 if (article != null && article.Name.Contains(str))
                     yield return article;
             }
+        }
+
+        public IEnumerable GetArticlesWithEditors()
+        {
+            foreach (Article article in articles)
+            {
+                foreach (Person person in editors)
+                {
+                    if (person == article.Author)
+                        yield return person;
+                }
+            }
+        }
+        
+        public IEnumerable GetEditorsWithoutArticles()
+        {
+            bool hasArticle = false;
+            foreach (Person editor in editors)
+            {
+                foreach (Article article in articles)
+                {
+                    if (article.Author == editor)
+                    {
+                        hasArticle = true;
+                        yield break;
+                    }
+                }
+                if (!hasArticle)
+                    yield return editor;
+                hasArticle = false;
+            }
+        }
+
+        public IEnumerator<Magazine> GetEnumerator()
+        {
+            return new MagazineEnumerator(articles, editors);
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetEnumerator();
         }
     }
 }
